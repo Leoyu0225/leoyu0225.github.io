@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Leoyu Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+  body { font-family:'Roboto',sans-serif; margin:0; padding:0; background:#fafafa; color:#333; }
+
+  /* ===== HERO ===== */
+  header {
+    position: relative; height: 70vh;
+    background: url("cover.jpg") no-repeat center center/cover;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; color:#fff;
+    text-shadow:2px 2px 8px rgba(0,0,0,.5);
+  }
+  .logo-img {
+    width: min(50%, 280px);
+    display:block; margin:0 auto;
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,.35));
+    user-select:none; -webkit-user-drag:none; pointer-events:none;
+  }
+  .scroll-down { position:absolute; bottom:36px; width:100%; text-align:center; font-size:1.05em; }
+  .arrow { font-size:1.8em; line-height:1; animation:bounce 1.5s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(9px)} }
+
+  /* ===== NAV ===== */
+  nav { position:sticky; top:0; z-index:999; background:#111; padding:10px; display:flex; gap:22px; justify-content:center; }
+  nav a { color:#fff; text-decoration:none; font-weight:700; letter-spacing:.3px; }
+  nav a:hover { color:#ddd; }
+
+  /* ===== SECTIONS / TITLES ===== */
+  section { padding:60px 20px; max-width:1000px; margin:auto; }
+  section h2 { font-size:2em; font-weight:700; text-align:center; margin-bottom:20px; letter-spacing:.5px; }
+
+  /* ===== PORTFOLIO ===== */
+  .category-title { font-size:1.5em; margin:30px 0 12px; text-align:left; font-weight:700; border-left:5px solid #111; padding-left:10px; letter-spacing:.3px; }
+  .gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; justify-items:center; }
+  .gallery img { width:100%; height:200px; object-fit:cover; border-radius:8px; cursor:pointer; user-select:none; -webkit-user-drag:none; }
+
+  .view-more, .view-less {
+    display:inline-block; margin-top:12px; padding:10px 14px; background:#111; color:#fff; text-decoration:none; border-radius:6px; font-weight:700; border:none; cursor:pointer;
+  }
+  .view-less { background:#555; margin-left:10px; }
+  .view-more[disabled], .view-less[disabled] { opacity:.45; cursor:not-allowed; }
+  .view-more:hover { background:#333; }
+  .view-less:hover { background:#444; }
+
+  /* ===== ABOUT / EQUIPMENT ===== */
+  .about-img { width:200px; height:200px; object-fit:cover; border-radius:100px; display:block; margin:20px auto; }
+
+  .gear-columns { display:flex; justify-content:center; gap:50px; margin-top:20px; flex-wrap:wrap; }
+  .gear-title { font-weight:700; margin-bottom:6px; display:block; }
+  .gear-list { list-style:none; padding:0; margin:6px 0 0; line-height:1.8em; }
+
+  /* ===== CONTACT / SUPPORT ===== */
+  .support-box {
+    margin-top:18px; text-align:center;
+    background:#fff; border:1px solid #e8e8e8; border-radius:10px; padding:18px;
+  }
+  .pay-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    background:#0070ba; color:#fff; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:700;
+  }
+  .pay-btn:hover { background:#045e9c; }
+  .pay-logo {
+    width:20px; height:20px; display:inline-block; background:#fff; border-radius:3px;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" viewBox="0 0 24 24"><path d="M20.245 5.458C19.49 3.96 17.708 3 15.509 3H7.158c-.38 0-.705.276-.767.651L4.006 20.474c-.046.285.175.546.463.546h4.13l.26-1.644.62-3.915.04-.256c.061-.375.386-.651.767-.651h2.413c3.136 0 5.593-1.274 6.31-4.964.02-.1.036-.197.048-.29.192-1.44-.08-2.47-.812-3.842zM9.768 16.64l-.04.256-.62 3.915-.26 1.644h2.485c.38 0 .705-.276.767-.651l.03-.188.484-3.05.04-.256c.061-.375.386-.651.767-.651h1.206c3.136 0 5.593-1.274 6.31-4.964.02-.1.036-.197.048-.29.192-1.44-.08-2.47-.812-3.842-.756-1.498-2.537-2.457-4.737-2.457h-1.96"/></svg>') center / contain no-repeat;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" viewBox="0 0 24 24"><path d="M20.245 5.458C19.49 3.96 17.708 3 15.509 3H7.158c-.38 0-.705.276-.767.651L4.006 20.474c-.046.285.175.546.463.546h4.13l.26-1.644.62-3.915.04-.256c.061-.375.386-.651.767-.651h2.413c3.136 0 5.593-1.274 6.31-4.964.02-.1.036-.197.048-.29.192-1.44-.08-2.47-.812-3.842-.756-1.498-2.537-2.457-4.737-2.457h-1.96"/></svg>') center / contain no-repeat;
+  }
+
+  /* ===== SITE NOTE (footer 上方提示区) ===== */
+  .site-note {
+    max-width:1000px; margin:20px auto 0; padding:18px 20px;
+    color:#333; background:#fff; border-top:1px solid #eee; border-bottom:1px solid #eee;
+    text-align:center; line-height:1.6;
+  }
+  .site-note p { margin:6px 0; }
+
+  /* ===== FOOTER（只保留版权，且更窄） ===== */
+  footer { text-align:center; padding:12px 20px; background:#111; color:#fff; margin-top:0; font-size:.95em; }
+
+  /* ===== MODAL ===== */
+  #modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,.85); }
+  #modalInner { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+  #modalImg { max-width:80vw; max-height:80vh; border-radius:6px; }
+
+  /* 更显眼的关闭按钮 */
+  .close-btn {
+    position:fixed; top:24px; right:24px;
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    font-size:26px; color:#fff; cursor:pointer; font-weight:800; line-height:1; user-select:none;
+    background:rgba(0,0,0,.55); border-radius:999px; box-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  .close-btn:hover { background:rgba(0,0,0,.75); }
+
+  #downloadBtn { position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    padding:10px 20px; background:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; }
+
+  /* arrows 固定在视窗两侧 */
+  .nav-arrow {
+    position:fixed; top:50%; transform:translateY(-50%);
+    font-size:40px; color:#fff; cursor:pointer; user-select:none; padding:8px 12px;
+    background:rgba(0,0,0,.3); border-radius:8px; z-index:1001;
+  }
+  #prevArrow { left:24px; }
+  #nextArrow { right:24px; }
+  .nav-arrow:hover { background:rgba(0,0,0,.5); }
+
+  /* ===== Responsive ===== */
+  @media (max-width:720px){
+    .gallery { grid-template-columns:repeat(2,1fr); }
+    .gallery img { height:170px; }
+    header { height:60vh; }
+    .logo-img { width:min(70%, 240px); }
+  }
+  @media (max-width:480px){
+    .gallery { grid-template-columns:1fr; }
+    .gallery img { height:200px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header>
+  <img src="logo.png" alt="LEOYU Logo" class="logo-img" />
+  <div class="scroll-down">
+    <!--<div class="arrow">&#8595;</div>
+    <span>Scroll down to explore</span>-->
+  </div>
+</header>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#about">About</a>
+  <a href="#equipment">Equipment</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- ===== PORTFOLIO ===== -->
+<section id="portfolio">
+  <h2>Portfolio</h2>
+
+  <!-- Cars -->
+  <div class="category-title">Cars</div>
+  <div class="gallery" id="gallery-cars"></div>
+  <button class="view-more" data-category="cars" id="more-cars">View more →</button>
+  <button class="view-less" data-category="cars" id="less-cars" style="display:none;">Show less</button>
+
+  <!-- Street -->
+  <div class="category-title">Street</div>
+  <div class="gallery" id="gallery-street"></div>
+  <button class="view-more" data-category="street" id="more-street">View more →</button>
+  <button class="view-less" data-category="street" id="less-street" style="display:none;">Show less</button>
+
+  <!-- Nature -->
+  <div class="category-title">Nature</div>
+  <div class="gallery" id="gallery-nature"></div>
+  <button class="view-more" data-category="nature" id="more-nature">View more →</button>
+  <button class="view-less" data-category="nature" id="less-nature" style="display:none;">Show less</button>
+
+  <!-- Animals -->
+  <div class="category-title">Animals</div>
+  <div class="gallery" id="gallery-animals"></div>
+  <button class="view-more" data-category="animals" id="more-animals">View more →</button>
+  <button class="view-less" data-category="animals" id="less-animals" style="display:none;">Show less</button>
+
+  <!-- Others -->
+  <div class="category-title">Others</div>
+  <div class="gallery" id="gallery-others"></div>
+  <button class="view-more" data-category="others" id="more-others">View more →</button>
+  <button class="view-less" data-category="others" id="less-others" style="display:none;">Show less</button>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <h2>About Me</h2>
+  <img src="about.JPG" alt="Leoyu Portrait" class="about-img" />
+  <p style="text-align:center; max-width:700px; margin: 0 auto; line-height:1.6em;">
+    Contracted photographer with Visual China Group (500PX), Sony Imaging PRO Support member, contributor to Getty Images, and member of NPPA.
+    Photographed events include the Formula 1 Chinese Grand Prix, the Indianapolis 500, the Sonsio Grand Prix, and the Indy 8 Hour, and looks forward to photographing more racing events in the future.
+  </p>
+</section>
+
+<!-- ===== EQUIPMENT ===== -->
+<section id="equipment">
+  <h2>Equipment</h2>
+  <div class="gear-columns">
+    <div>
+      <span class="gear-title">Cameras</span>
+      <ul class="gear-list">
+        <li>Sony α7R III</li>
+        <li>Sony α6700</li>
+        <li>DJI Osmo Action 4</li>
+      </ul>
+    </div>
+    <div>
+      <span class="gear-title">Lenses</span>
+      <ul class="gear-list">
+        <li>Sony FE 70-200mm F4 Macro G OSS II</li>
+        <li>Sony E 70-350mm F/4.5-6.3 G OSS</li>
+        <li>Sigma 16-28mm F/2.8 DG DN Contemporary</li>
+        <li>Tamron 28-75mm F/2.8 Di III VXD G2</li>
+        <li>Tamron 20-40mm F/2.8 Di III <em>(Previously used)</em></li>
+        <li>Tamron 50-400mm F/4.5-6.3 Di III VC <em>(Previously used)</em></li>
+        <li>Tamron 70-300mm F/4.5-6.3 Di VC <em>(Previously used)</em></li>
+        <li>Tamron 24mm F/2.8 Di III OSD M1:2 <em>(Previously used)</em></li>
+        <li>Viltrox 16mm F1.8 <em>(Previously used)</em></li>
+      </ul>
+      <p style="opacity:.7; font-size:.95em; margin-top:8px;">
+        <em>Photos on this site may include work created with the previously used lenses listed above.</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT + SUPPORT ===== -->
+<section id="contact">
+  <h2>Contact</h2>
+  <p style="text-align:center;">
+    Instagram: <a href="https://www.instagram.com/sy060225" target="_blank">@sy060225</a><br/>
+    Xiaohongshu: 363652997<br/>
+    Email: <a href="mailto:yusicheng6225@gmail.com">yusicheng6225@gmail.com</a><br/>
+    Location: Indianapolis / Beijing
+  </p>
+
+  <div class="support-box">
+    <p style="margin:0 0 10px;">If you enjoy my photography and would like to support my work:</p>
+    <a class="pay-btn" href="https://paypal.me/leoyu0225" target="_blank" rel="noopener">
+      <span class="pay-logo"></span>
+      <span>Donate via PayPal</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== SITE NOTE (两条提示语，位于 footer 上方，浅色背景) ===== -->
+<section class="site-note">
+  <p><em>If any photo includes you and you would prefer it not to appear here, please contact me and I will remove it promptly.</em></p>
+  <p><em>If you notice any issue with the website itself, please contact me and I will do my best to resolve it.</em></p>
+</section>
+
+<!-- ===== FOOTER（只保留版权） ===== -->
+<footer>
+  <p>© 2025 Leoyu Photography. All Rights Reserved.</p>
+</footer>
+
+<!-- ===== MODAL ===== -->
+<div id="modal">
+  <div id="modalInner">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <span class="nav-arrow" id="prevArrow">&#10094;</span>
+    <img id="modalImg" src="" alt="Full View"/>
+    <span class="nav-arrow" id="nextArrow">&#10095;</span>
+    <button id="downloadBtn">Download</button>
+  </div>
+</div>
+
+<script>
+  /* 基础交互：禁右键/拖拽 */
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  document.addEventListener("dragstart", e => e.preventDefault());
+
+  /* ====== 数量 ====== */
+  function genBases(prefix, count){
+    return Array.from({length: count}, (_,i)=> `${prefix}${i+1}`); // 不带扩展名
+  }
+  const IMAGES_BASES = {
+    cars:    genBases('img/cars/cars',    401),
+    street:  genBases('img/street/street',108),
+    nature:  genBases('img/nature/nature',85),
+    animals: genBases('img/animals/animals',83),
+    others:  genBases('img/others/others',27)
+  };
+
+  /* 首页封面固定 3 张（你的顺序） */
+  const FEATURED = {
+    animals: ["img/animals/animals73","img/animals/animals14","img/animals/animals47"],
+    cars:    ["img/cars/cars152","img/cars/cars126","img/cars/cars308"],
+    nature:  ["img/nature/nature4","img/nature/nature47","img/nature/nature41"],
+    street:  ["img/street/street107","img/street/street103","img/street/street74"],
+    others:  ["img/others/others14","img/others/others7","img/others/others27"]
+  };
+
+  /* 扩展名兜底 */
+  const EXT_CANDIDATES = ['.jpg','.JPG','.jpeg','.JPEG','.png','.PNG','.webp','.WEBP'];
+  const normalizeBase = p => p.replace(/\.[^/.]+$/, '');
+
+  // 缩略图：失败即移除；写入 data-base
+  function applyCandidates(imgEl, basePath){
+    const base = normalizeBase(basePath);
+    imgEl.dataset.base = base;
+    let i = 0;
+    function tryNext(){
+      if(i >= EXT_CANDIDATES.length){
+        const parent = imgEl.parentElement; if(parent) parent.removeChild(imgEl);
+        imgEl.onerror = null; return;
+      }
+      imgEl.src = base + EXT_CANDIDATES[i++];
+    }
+    imgEl.onerror = tryNext;
+    imgEl.onload  = () => { imgEl.onerror = null; imgEl.dataset.src = imgEl.src; };
+    tryNext();
+  }
+
+  // 大图：基名解析为可用 URL
+  function resolveSrc(basePath, onOK, onFail){
+    const base = normalizeBase(basePath);
+    let i = 0;
+    function tryNext(){
+      if(i >= EXT_CANDIDATES.length){ onFail && onFail(); return; }
+      const candidate = base + EXT_CANDIDATES[i++];
+      const test = new Image();
+      test.onload = () => onOK(candidate);
+      test.onerror = tryNext;
+      test.src = candidate;
+    }
+    tryNext();
+  }
+
+  // 一次洗牌
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  // FULL：FEATURED 在前，其余随机（去重）
+  function fullList(cat){
+    const featured = (FEATURED[cat] || []).map(normalizeBase);
+    const all = (IMAGES_BASES[cat] || []).map(normalizeBase);
+    const set = new Set(featured);
+    all.forEach(p => set.add(p));
+    const rest = Array.from(set).slice(featured.length);
+    return featured.concat(shuffle(rest));
+  }
+
+  // 本次会话固定顺序
+  const MASTER = {
+    cars: fullList('cars'),
+    street: fullList('street'),
+    nature: fullList('nature'),
+    animals: fullList('animals'),
+    others: fullList('others')
+  };
+
+  // 渲染与分页（基于 MASTER）
+  const PREVIEW=3, STEP=18;
+  const state = { cars:PREVIEW, street:PREVIEW, nature:PREVIEW, animals:PREVIEW, others:PREVIEW };
+  const galleries = {
+    cars:document.getElementById('gallery-cars'),
+    street:document.getElementById('gallery-street'),
+    nature:document.getElementById('gallery-nature'),
+    animals:document.getElementById('gallery-animals'),
+    others:document.getElementById('gallery-others')
+  };
+
+  function renderCategory(cat){
+    const container = galleries[cat];
+    const list = MASTER[cat];
+    const visible = state[cat];
+    container.innerHTML='';
+
+    list.slice(0, visible).forEach(base=>{
+      const img = document.createElement('img');
+      img.alt = cat;
+      applyCandidates(img, base);
+      container.appendChild(img);
+    });
+
+    attachPreview(container, cat);
+
+    const moreBtn = document.getElementById('more-'+cat);
+    const lessBtn = document.getElementById('less-'+cat);
+    moreBtn.disabled = (visible >= list.length);
+    lessBtn.style.display = (visible > PREVIEW) ? 'inline-block' : 'none';
+  }
+  function viewMore(cat){ const cur=state[cat], total=MASTER[cat].length; state[cat]=(cur<STEP)?Math.min(STEP,total):Math.min(cur+STEP,total); renderCategory(cat); }
+  function showLess(cat){ const cur=state[cat]; state[cat]=(cur<=STEP)?PREVIEW:(cur-STEP); renderCategory(cat); }
+
+  ['cars','street','nature','animals','others'].forEach(cat=>renderCategory(cat));
+  document.querySelectorAll('.view-more').forEach(b=>b.addEventListener('click',()=>viewMore(b.dataset.category)));
+  document.querySelectorAll('.view-less').forEach(b=>b.addEventListener('click',()=>showLess(b.dataset.category)));
+
+  /* 预览 + 强制水印下载 */
+  const modal = document.getElementById("modal");
+  const modalImg = document.getElementById("modalImg");
+  const closeModal = document.getElementById("closeModal");
+  const prevArrow = document.getElementById("prevArrow");
+  const nextArrow = document.getElementById("nextArrow");
+  const downloadBtn = document.getElementById("downloadBtn");
+
+  let currentBases = [];
+  let currentIndex = 0;
+
+  function attachPreview(container, cat){
+    container.addEventListener('click', (e)=>{
+      const t = e.target;
+      if(t && t.tagName === 'IMG'){
+        currentBases = MASTER[cat];
+        const clickedBase = t.dataset.base || '';
+        let idx = currentBases.findIndex(b => b === clickedBase);
+        if(idx < 0) idx = 0;
+        openModalAt(idx);
+      }
+    });
+  }
+
+  function openModalAt(idx){
+    if(!currentBases.length) return;
+    let tries = 0;
+    function attempt(i){
+      const len = currentBases.length;
+      currentIndex = (i + len) % len;
+      resolveSrc(currentBases[currentIndex], (url)=>{
+        modalImg.src = url;
+        modal.style.display = 'block';
+      }, ()=>{
+        if(++tries > len) { modal.style.display='none'; return; }
+        attempt(currentIndex + 1);
+      });
+    }
+    attempt(idx);
+  }
+
+  function showPrev(){ openModalAt(currentIndex - 1); }
+  function showNext(){ openModalAt(currentIndex + 1); }
+
+  prevArrow.onclick = showPrev;
+  nextArrow.onclick = showNext;
+  document.addEventListener('keydown', (e)=>{
+    if(modal.style.display !== 'block') return;
+    if(e.key === 'ArrowLeft') showPrev();
+    if(e.key === 'ArrowRight') showNext();
+    if(e.key === 'Escape') modal.style.display = 'none';
+  });
+  closeModal.onclick = () => modal.style.display = "none";
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.style.display = 'none'; });
+
+  // Download（带水印）
+  downloadBtn.textContent = "Download";
+  downloadBtn.onclick = () => {
+    if(!modalImg.src) return;
+
+    const ensureReady = (cb) => {
+      if (modalImg.complete && modalImg.naturalWidth) cb();
+      else modalImg.addEventListener('load', cb, { once:true });
+    };
+
+    ensureReady(() => {
+      const w = modalImg.naturalWidth || modalImg.width;
+      const h = modalImg.naturalHeight || modalImg.height;
+      if(!w || !h){ alert('Download failed to prepare the image.'); return; }
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = w; canvas.height = h;
+
+      ctx.drawImage(modalImg, 0, 0, w, h);
+
+      const fontSize = Math.max(24, Math.floor(w * 0.03));
+      ctx.font = `${fontSize}px Arial`;
+      ctx.textAlign = "right";
+      ctx.lineWidth = Math.max(2, Math.floor(fontSize * 0.12));
+      ctx.strokeStyle = "rgba(0,0,0,0.55)";
+      ctx.strokeText("@Leoyu0225", w - 20, h - 20);
+      ctx.fillStyle = "rgba(255,255,255,0.88)";
+      ctx.fillText("@Leoyu0225", w - 20, h - 20);
+
+      const fileName = ((modalImg.src.split('/').pop() || 'LeoyuPhoto').replace(/\.[^.]+$/, '')) + "_wm.jpg";
+
+      const trigger = (url) => {
+        const a = document.createElement("a");
+        a.href = url; a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(()=>a.click(), 0);
+        a.remove();
+      };
+
+      try {
+        if (canvas.toBlob) {
+          canvas.toBlob(blob => {
+            if(!blob){ const url = canvas.toDataURL("image/jpeg", 0.95); trigger(url); return; }
+            const url = URL.createObjectURL(blob);
+            trigger(url);
+            setTimeout(()=> URL.revokeObjectURL(url), 1500);
+          }, "image/jpeg", 0.95);
+        } else {
+          const url = canvas.toDataURL("image/jpeg", 0.95);
+          trigger(url);
+        }
+      } catch (err) {
+        alert('Download failed. Please try again.');
+      }
+    });
+  };
+</script>
+
+</body>
+</html>
