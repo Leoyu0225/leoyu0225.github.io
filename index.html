@@ -209,9 +209,10 @@
         <li>Tamron 70-300mm F/4.5-6.3 Di VC <em>(Previously used)</em></li>
         <li>Tamron 24mm F/2.8 Di III OSD M1:2 <em>(Previously used)</em></li>
         <li>Viltrox 16mm F1.8 <em>(Previously used)</em></li>
+        <li>Viltrox 85mm F1.8 <em>(Previously used)</em></li>
       </ul>
       <p style="opacity:.7; font-size:.95em; margin-top:8px;">
-        <em>Photos on this site may include work created with the previously used lenses listed above.</em>
+        <em>Photos on this site include work created with the previously used lenses listed above.</em>
       </p>
     </div>
   </div>
@@ -263,16 +264,16 @@
   document.addEventListener("contextmenu", e => e.preventDefault());
   document.addEventListener("dragstart", e => e.preventDefault());
 
-  /* 文件数量 */
+  /* 文件数量，添加照片改后面数字 */
   function genBases(prefix, count){
     return Array.from({length: count}, (_,i)=> `${prefix}${i+1}`); // 不带扩展名
   }
   const IMAGES_BASES = {
-    cars:    genBases('img/cars/cars',428),
-    street:  genBases('img/street/street',108),
-    nature:  genBases('img/nature/nature',85),
-    animals: genBases('img/animals/animals',83),
-    others:  genBases('img/others/others',28)
+    cars:    genBases('img/cars/cars',848),
+    street:  genBases('img/street/street',111),
+    nature:  genBases('img/nature/nature',76),
+    animals: genBases('img/animals/animals',90),
+    others:  genBases('img/others/others',29)
   };
 
   /* 首页封面固定 3 张 */
@@ -463,14 +464,15 @@
 
       ctx.drawImage(modalImg, 0, 0, w, h);
 
-      const fontSize = Math.max(24, Math.floor(w * 0.03));
-      ctx.font = `${fontSize}px Arial`;
-      ctx.textAlign = "right";
+      // 绘制底部中央 © Leoyu Photography 水印
+      const fontSize = Math.max(24, Math.floor(w * 0.025));
+      ctx.font = `${fontSize}px 'Roboto', sans-serif`;
+      ctx.textAlign = "center";
       ctx.lineWidth = Math.max(2, Math.floor(fontSize * 0.12));
       ctx.strokeStyle = "rgba(0,0,0,0.55)";
-      ctx.strokeText("@Leoyu0225", w - 20, h - 20);
-      ctx.fillStyle = "rgba(255,255,255,0.88)";
-      ctx.fillText("@Leoyu0225", w - 20, h - 20);
+      ctx.strokeText("© Leoyu Photography", w / 2, h - 20);
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.fillText("© Leoyu Photography", w / 2, h - 20);
 
       const fileName = ((modalImg.src.split('/').pop() || 'LeoyuPhoto').replace(/\.[^.]+$/, '')) + "_wm.jpg";
 
